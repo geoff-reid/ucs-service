@@ -108,7 +108,8 @@ def getCatalog(identifier=None):
     handle = UcsHandle(*authInfo, secure=False)
     if handle.login():
         try:
-            elements = handle.query_children(in_dn=identifier)
+            elements = (handle.query_children(in_dn=identifier))
+            elements.append(handle.query_dn(dn=identifier))
         except UcsException as e:
             handle.logout()
             return 'Internal Server Error', e.error_descr, 500
